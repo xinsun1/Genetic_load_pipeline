@@ -43,10 +43,11 @@ check here https://github.com/xinsun1/Genetic_load_pipeline/blob/main/genetic_lo
 I normally do the following filter
  - Remove scafffold taht is too short
  - Mask GT (mask to missing) with low depth
+ - remove SNPs with AC/AN > 0.5  
+ In this case, the SNP function annotion is know given the assumption that the major allele is the ancestral state. Unless your reference is the outgroup, here you could assume the outgroup(your reference genome) has the ancestral state of your target species. E.g., snpEff gives anntation about C->T mutation. But you actually want T->C annotation.
 
 
 Remove scafffold that is too short
-
 ``` bash
 awk '$2>50000 {print $1}' ./emily_sharing/Copsychus.sechellarum.final.assembly.fasta.fai > list.chr50kb
 ```
@@ -54,9 +55,9 @@ awk '$2>50000 {print $1}' ./emily_sharing/Copsychus.sechellarum.final.assembly.f
 Remove transversion (later)
 ```
 ```
+
 Mask GT with low depth
 N=202
-
 ```
 bcftools view -m2 -M2 -v snps ./emily_sharing/snpeff.vcf | bcftools filter -S . -e '(GT="0/1" & AD[0:]<3) | (GT="0/1" & AD[:1]<3) | FMT/DP<5' | bcftools filter -e 'AC<2 | AC>(AN-2)' | bcftools view  -Oz -o snpeff.dp5.het3.mac2.vcf.gz &
 bcftools index snpeff.dp5.het3.mac2.vcf.gz 
@@ -65,7 +66,6 @@ Maf50
 ```
 bcftools filter -e 'AC/AN > 0.5' snpeff.dp5.het3.mac2.vcf.gz | bcftools query -f '%CHROM\t%POS\n' >  list.snp_f_maf50
 ```
-
 
 ```
 # filter
@@ -133,29 +133,6 @@ OUT="anc161_50kb_tv"; for type in lof syn nonsyn; do awk 'NR==FNR {a[$1]=1;next}
 
 
 ```
-
-About new ancestral state 
-file is `snpeff.al2.birdAnc161.c7_anc.bed` in `emily_share`
-
-```
-$ head snpeff.al2.birdAnc161.c7_anc.bed
-birdAnc161refChr340     271429  271430  scaffold_0      19      20      G
-birdAnc161refChr340     271428  271429  scaffold_0      20      21      T
-birdAnc161refChr340     271423  271424  scaffold_0      25      26      G
-birdAnc161refChr340     271422  271423  scaffold_0      26      27      T
-birdAnc161refChr340     271009  271010  scaffold_0      290     291     G
-birdAnc161refChr340     270940  270941  scaffold_0      359     360     C
-birdAnc161refChr340     270638  270639  scaffold_0      661     662     A
-birdAnc161refChr340     270461  270462  scaffold_0      856     857     G
-birdAnc161refChr340     270172  270173  scaffold_0      1141    1142    G
-birdAnc161refChr340     269945  269946  scaffold_0      1369    1370    G
-```
-
-Columns are chromosme_in_ancestral_sequence Start_in_ANC END_in_ANC SMR_chromosome Start_in_SMR END_in_SMR Ancestral_Alelle  
-One SNP per line  
-Snpeff load were calculated in the previous section `#3.6`
-
-
 
 ### 1.5 Rscript for plot
 new ancestral state
