@@ -27,16 +27,16 @@ flip the REF/ALT of your GenoType. E.g. GenoType=AA, REF=A, in vcf file your GT 
 
 ## 1. snpEff
 ### 1.0 set env
+Prepare files and softwares
 ``` bash
 WDIR=/maps/projects/mjolnir1/people/gnr216/9-others/1-robin_gload
 # your vcf file should be ready
+module purge
+module load bcftools/1.17
 ```
 
 ### 1.1 use snpEff to annotate your vcf file
-
-``` bash
-
-```
+check here 
 
 
 ### 1.2 filter 
@@ -45,7 +45,7 @@ I normally do the following filter
  - Mask GT (mask to missing) with low depth
 
 
-Remove scafffold taht is too short
+Remove scafffold that is too short
 
 ``` bash
 awk '$2>50000 {print $1}' ./emily_sharing/Copsychus.sechellarum.final.assembly.fasta.fai > list.chr50kb
