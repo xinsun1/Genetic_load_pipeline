@@ -1,12 +1,12 @@
 # Genetic load analysis
 
-**NB!!!** Please check this https://github.com/NBISweden/GenErode before you decided to read the following content.  
+**NB!!!** Please check this https://github.com/NBISweden/GenErode before you decided to spend time on the following content.  
 
-Genetic load calculation using various proxies for the real genetic fitness, e.g. mutation effect annnotation (snpEFF), loci(SNP level) conservation score (phyloP, phastCon), loci conservation score at AA level (???, should be better for cross species?).  
+Genetic load calculation using various proxies for the real genetic fitness, e.g. mutation effect annnotation (snpEFF), loci(SNP level) conservation score (phyloP, phastCon), loci conservation score at AA level (???, should be better for cross species?), heterozygosity, ROH.  
 
 This is my summary pipline for such analysis. Please let me know if anything is incorrect or should be added.
 
-## General things (assumptions) to take in mind  
+## General things (assumptions)  
 
 - Ancestral state  
 The whole analysis is based on the assumption of ancestral state (allele) known. Thus, the effect of a new mutation (derived allele) is compared to the ancestral state to infer the possible effect of this mutation (beneifical or deleterious).  
@@ -18,21 +18,32 @@ Before doing any dirty work, please check annotations of your species' reference
 
 - Accurate genotype information  
 <del> For ancient DNA folks, this is your nightmare. </del> It is important to have a reliable genotype called. It is better to have some good reliable SNPs than more SNPs with messy genotypes (low to medium).  
-There are also ways to calculate genetic load based on genotype likelihood
+There are also ways to calculate genetic load based on genotype likelihood (not in this pipeline).
 
 ## Nerdy words
 - Polarize  
 flip the REF/ALT of your GenoType. E.g. GenoType=AA, REF=A, in vcf file your GT is 0/0 (0|0 if phased). When your ancestral state is known ANC=G, then GT should be flipped as 1/1.
 
 
-
-
-
-# 1. snpEFF
-## 0. set env
+## 1. snpEff
+### 1.0 set env
+``` bash
 WDIR=/maps/projects/mjolnir1/people/gnr216/9-others/1-robin_gload
+# your vcf file should be ready
+```
 
-## 1. filter 
+### 1.1 use snpEff to annotate your vcf file
+
+``` bash
+
+```
+
+
+### 1.2 filter 
+I normally do the following filter
+ - Remove scafffold taht is too short
+ - Mask GT (mask to missing) with low depth
+
 
 Remove scafffold taht is too short
 
@@ -65,7 +76,7 @@ bcftools index dp5.het3.mac2.mis20.vcf.gz
 ```
 
 
-## 2. get ancestral state
+### 1.3 get ancestral state
 
 Get ancestral state from outgroup
 OUT_GROUPS : SAXI, SCRUB, SEYCH, TAEGUT
@@ -84,7 +95,7 @@ paste list.snp.al2.chr50kb.samtools anc.SCRUB | awk 'NR==FNR {a[$1][$2]=$3;next}
 OR ANC == Major Allele
 
 
-## 3. get genetic load
+### 1.4 get genetic load
 
 Get syn, nonsyn, lof
 
@@ -146,7 +157,7 @@ Snpeff load were calculated in the previous section `#3.6`
 
 
 
-## 4. Rscript for plot
+### 1.5 Rscript for plot
 new ancestral state
 
 ``` {r}
