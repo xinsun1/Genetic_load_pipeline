@@ -1,6 +1,6 @@
 # Genetic load analysis
 
-**NB!!!** Please check this https://github.com/NBISweden/GenErode before you decided to spend time on the following content.  
+**NB!!!** Please check this https://github.com/NBISweden/GenErode before you decide to spend time on the following content.  
 
 Genetic load calculation using various proxies for the real genetic fitness, e.g. mutation effect annnotation (snpEFF), loci(SNP level) conservation score (phyloP, phastCon), loci conservation score at AA level (???, should be better for cross species?), heterozygosity, ROH.  
 
