@@ -76,7 +76,7 @@ count number of derived alleles per individual per variant group
  - 4. only transversion
  repeat 3. except using only transverion
  - 5. exclude maf> 0.5
- repeat 3. except remove SNPs with MAF > 0.5. This is a stupid decision. Should include these SNPs by polarize the ancestral state as the the major allele.
+ repeat 3. except remove SNPs with MAF > 0.5. This is a lazy decision. A bit complicated to re-generate the reference sequence by polarize the ancestral state as the major allele and then re-do the snpEff anntation. Not a problem for other methods, e.g. phyloP.
 
 
 ``` bash

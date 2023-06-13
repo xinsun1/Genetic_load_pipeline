@@ -36,7 +36,7 @@ module load bcftools/1.17
 ```
 
 ### 1.1 use snpEff to annotate your vcf file
-check here 
+check here https://github.com/xinsun1/Genetic_load_pipeline/blob/main/genetic_load_rhino.md
 
 
 ### 1.2 filter 
