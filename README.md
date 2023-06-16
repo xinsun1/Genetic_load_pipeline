@@ -1,2 +1,2 @@
 # Genetic_load_pipeline
-Nextflow pipeline for genetic load analysis
+Nextflow + Docker pipeline for genetic load analysis
